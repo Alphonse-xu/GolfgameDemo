@@ -8,6 +8,7 @@ public class movement : MonoBehaviour
 
     private Rigidbody2D rb;
     private BoxCollider2D coll;
+    
     // private Animator anim;
 
     [Header("移动参数")]
@@ -27,13 +28,15 @@ public class movement : MonoBehaviour
     //碰撞体尺寸
     Vector2 colliderStandSize;
     Vector2 colliderStandOffset;
-    Vector2 colliderBigSize;
-    Vector2 colliderBigOffset;
+    Vector2 colliderSmallSize;
+    Vector2 colliderSmallOffset;
 
+    //角色尺寸
+    //Vector3 golfStandSize;
+    //Vector3 golfSmallSize;
 
     //按键设置
-   bool jumpPressed;
-   // int jumpCount;
+    bool jumpPressed;
 
     void Start()
     {
@@ -42,9 +45,11 @@ public class movement : MonoBehaviour
 
         colliderStandSize = coll.size;
         colliderStandOffset = coll.offset;
-        colliderBigSize = new Vector2(coll.size.x * 2, coll.size.y * 2);
-        colliderBigOffset = new Vector2(coll.size.x * 2, coll.size.y * 2);
-       // anim = GetComponent<Animator>();
+        colliderSmallSize = new Vector2(coll.size.x / 2, coll.size.y / 2);
+        colliderSmallOffset = new Vector2(coll.size.x / 2, coll.size.y / 2);
+        //golfStandSize = rb.transform.localScale;
+        //golfSmallSize = new Vector3( rb.transform.localScale.x / 2, rb.transform.localScale.y / 2, rb.transform.localScale.z);
+        // anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -98,6 +103,18 @@ public class movement : MonoBehaviour
             isOnGround = false;
             isJump = true;
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Collection")
+        {
+            Destroy(collision.gameObject);
+            transform.localScale = new Vector3(1, 1, 1);
+            
+            coll.size = colliderSmallSize;
+            coll.offset = colliderStandOffset;
         }
     }
 

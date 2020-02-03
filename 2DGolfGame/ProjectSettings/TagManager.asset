@@ -9,6 +9,7 @@ TagManager:
   - Planet
   - Shield
   - Pickup
+  - Collection
   layers:
   - Default
   - TransparentFX
@@ -52,7 +53,7 @@ TagManager:
   - name: map
     uniqueID: 331660915
     locked: 0
-  - name: Enemy
+  - name: collection
     uniqueID: 3774076613
     locked: 0
   - name: Player
