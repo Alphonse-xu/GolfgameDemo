@@ -8,15 +8,15 @@ public class movement : MonoBehaviour
 
     private Rigidbody2D rb;
     private BoxCollider2D coll;
+    private Transform GP;
     
     // private Animator anim;
 
     [Header("移动参数")]
     public float speed = 8f;
     public float jumpForce = 6.3f;
-
     private float horizontalMove;
-    // public Transform groundCheck;
+    //private float currentSize;
 
     [Header("状态")]
     public bool isJump;
@@ -32,8 +32,11 @@ public class movement : MonoBehaviour
     Vector2 colliderSmallOffset;
 
     //角色尺寸
-    //Vector3 golfStandSize;
-    //Vector3 golfSmallSize;
+    Vector3 golfStandSize;
+    Vector3 golfStandPos;
+    Vector3 golfSmallSize;
+   // Vector3 golfSmallPos;
+
 
     //按键设置
     bool jumpPressed;
@@ -42,13 +45,16 @@ public class movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
+        GP = GetComponent<Transform>();
 
         colliderStandSize = coll.size;
         colliderStandOffset = coll.offset;
-        colliderSmallSize = new Vector2(coll.size.x / 2, coll.size.y / 2);
-        colliderSmallOffset = new Vector2(coll.size.x / 2, coll.size.y / 2);
-        //golfStandSize = rb.transform.localScale;
-        //golfSmallSize = new Vector3( rb.transform.localScale.x / 2, rb.transform.localScale.y / 2, rb.transform.localScale.z);
+        colliderSmallSize = new Vector2(coll.size.x / 2f, coll.size.y / 2f);
+        colliderSmallOffset = new Vector2(coll.offset.x / 2f, coll.offset.y / 2f);
+        golfStandSize = GP.localScale;
+        golfStandPos = GP.position;
+        golfSmallSize = new Vector3( GP.localScale.x - 0.4f, GP.localScale.y - 0.4f, GP.localScale.z - 0.4f);
+        //golfSmallPos = new Vector3( transform.localScale.x / 2, transform.localScale.y / 2);
         // anim = GetComponent<Animator>();
     }
 
@@ -91,7 +97,7 @@ public class movement : MonoBehaviour
         //人物反转
         if (horizontalMove != 0)
         {
-            transform.localScale = new Vector3(horizontalMove * 1.4f, 1.4f, 1.4f);
+            transform.localScale = new Vector3(horizontalMove * System.Math.Abs(GP.localScale.x), GP.localScale.y, GP.localScale.z);
         }
         
     }
@@ -111,35 +117,16 @@ public class movement : MonoBehaviour
         if(collision.tag == "Collection")
         {
             Destroy(collision.gameObject);
-            transform.localScale = new Vector3(1, 1, 1);
-            
+
             coll.size = colliderSmallSize;
-            coll.offset = colliderStandOffset;
+            coll.offset = colliderSmallOffset;
+            GP.localScale = golfSmallSize;            //transform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
+
         }
     }
 
     /*
-    void Jump()//跳跃
-    {
-        if (isGround)
-        {
-            jumpCount = 2;//可跳跃数量
-            isJump = false;
-        }
-        if (jumpPressed && isGround)
-        {
-            isJump = true;
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpCount--;
-            jumpPressed = false;
-        }
-        else if (jumpPressed && jumpCount > 0 && isJump)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpCount--;
-            jumpPressed = false;
-        }
-    }
+   
 
     void SwitchAnim()//动画切换
     {
