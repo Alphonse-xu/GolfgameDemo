@@ -13,7 +13,7 @@ public class movement : MonoBehaviour
     // private Animator anim;
 
     [Header("移动参数")]
-    public float speed = 8f;
+    public float speed = 7f;
     public float jumpForce = 6.3f;
     private float horizontalMove;
     //private float currentSize;
@@ -28,14 +28,14 @@ public class movement : MonoBehaviour
     //碰撞体尺寸
     Vector2 colliderStandSize;
     Vector2 colliderStandOffset;
-    Vector2 colliderSmallSize;
+    //Vector2 colliderSmallSize;
     Vector2 colliderSmallOffset;
 
     //角色尺寸
     Vector3 golfStandSize;
     Vector3 golfStandPos;
     Vector3 golfSmallSize;
-   // Vector3 golfSmallPos;
+    //Vector3 golfSmallPos;
 
 
     //按键设置
@@ -49,12 +49,12 @@ public class movement : MonoBehaviour
 
         colliderStandSize = coll.size;
         colliderStandOffset = coll.offset;
-        colliderSmallSize = new Vector2(coll.size.x / 2f, coll.size.y / 2f);
-        colliderSmallOffset = new Vector2(coll.offset.x / 2f, coll.offset.y / 2f);
+        //colliderSmallSize = new Vector2(coll.size.x , coll.size.y );
+        colliderSmallOffset = new Vector2(coll.offset.x / 2.5f , coll.offset.y / 2.5f - 0.15f);
         golfStandSize = GP.localScale;
         golfStandPos = GP.position;
-        golfSmallSize = new Vector3( GP.localScale.x - 0.4f, GP.localScale.y - 0.4f, GP.localScale.z - 0.4f);
-        //golfSmallPos = new Vector3( transform.localScale.x / 2, transform.localScale.y / 2);
+        golfSmallSize = new Vector3( GP.localScale.x / 2.5f, GP.localScale.y / 2.5f, GP.localScale.z / 2.5f);
+       // golfSmallPos = new Vector3( GP.position.x + 0.2f, GP.position.y, GP.position.z);
         // anim = GetComponent<Animator>();
     }
 
@@ -118,7 +118,7 @@ public class movement : MonoBehaviour
         {
             Destroy(collision.gameObject);
 
-            coll.size = colliderSmallSize;
+            //coll.size = colliderSmallSize;
             coll.offset = colliderSmallOffset;
             GP.localScale = golfSmallSize;            //transform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
 
