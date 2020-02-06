@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class movement : MonoBehaviour
 {
@@ -111,6 +112,7 @@ public class movement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //收集
         if(collision.tag == "Collection")
         {
             Destroy(collision.gameObject);
@@ -118,6 +120,12 @@ public class movement : MonoBehaviour
             coll.offset = colliderSmallOffset;
             GP.localScale = golfSmallSize;            //transform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
 
+        }
+
+        //
+        if (collision.tag == "GameOver")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

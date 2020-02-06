@@ -46,7 +46,7 @@ public class GolfDrag : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             lr.enabled = false;
-            GolfRigid.AddForce(new Vector2(2 * (startPos.x - endPos.x), 2 * (startPos.y - endPos.y)), ForceMode2D.Impulse);
+            GolfRigid.AddForce(new Vector2(1 * (startPos.x - endPos.x), 1 * (startPos.y - endPos.y)), ForceMode2D.Impulse);
             //GolfRigid.AddForce(new Vector2(10,10), ForceMode2D.Impulse);
         }
     }
